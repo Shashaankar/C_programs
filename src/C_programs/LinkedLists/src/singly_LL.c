@@ -141,19 +141,22 @@ void _insert_last_singly_LL(int x, int y) {
 
 }
 
+
+/** @brief: Given a linked list of co-ordinates where adjacent points either
+ * form a vertical line or a horizontal line. Delete points from the
+ * linked list which are in the middle of a horizontal or vertical line. 
+ * */
 void _remove_middle_points() {
 
     /** logic to remove middle elements */
     struct node *temp=NULL, *delete_node=NULL;
 
     /** Insert and print nodes */
-    _insert_last_singly_LL(0, 10);
-    _insert_last_singly_LL(1, 10);
-    _insert_last_singly_LL(5, 10);
-    _insert_last_singly_LL(7, 10);
-    _insert_last_singly_LL(7, 5);
-    _insert_last_singly_LL(20, 5);
-    _insert_last_singly_LL(40, 5);
+    _insert_last_singly_LL(2,3);
+    _insert_last_singly_LL(4, 3);
+    _insert_last_singly_LL(6, 3);
+    _insert_last_singly_LL(10, 3);
+    _insert_last_singly_LL(12, 3);
 
     _print_full_LL(head);
 
@@ -192,6 +195,134 @@ void _remove_middle_points() {
     _free_singly_LL(head);
 }
 
+
+/** @brief: Given a linked list, reverse alternate nodes and append them to end
+ * of list. Extra allowed space is O(1) 
+ * Examples
+ *
+ * Input List:  1->2->3->4->5->6
+ * Output List: 1->3->5->6->4->2
+ *
+ * Input List:  12->14->16->18->20
+ * Output List: 12->16->20->18->14 */
+
+void _reverse_alt_app_end() {
+
+    struct node *temp=NULL, *alt_list=NULL, *alt_first=NULL;
+
+    /** Insert few elements */
+    _insert_last_singly_LL(12, 0);
+    _insert_last_singly_LL(14, 0);
+    _insert_last_singly_LL(16, 0);
+    _insert_last_singly_LL(18, 0);
+    _insert_last_singly_LL(20, 0);
+
+    _print_full_LL(head);
+
+    temp = head;
+    if (!temp) {
+        printf("_reverse_alt: List is empty\n");
+        return;
+    }
+
+    while (temp) {
+
+        if (temp && temp->next && temp->next->next) {
+            
+            if(!alt_list) {
+                alt_list = temp->next;
+                temp->next = temp->next->next;
+                alt_list->next = NULL;
+            } else {
+
+                alt_first = temp->next;
+                temp->next = temp->next->next;
+
+                /** add alt first to starting of the alt list */
+                alt_first->next = alt_list;
+                alt_list = alt_first;
+            }
+        } else {
+            break;
+        }
+        temp = temp->next;
+
+    }
+
+    /** Append the alt list to the end */
+    if (temp->next) {
+        temp->next->next = alt_list;
+    } else {
+        temp->next = alt_list;
+    }
+
+    printf("_reverse_alt: After adjusting the LL\n");
+
+    _print_full_LL(head);
+
+    _free_singly_LL(head);
+
+
+}
+
+/** @brief: Given a singly linked list, write a function to swap elements
+ * pairwise. For example, if the linked list is 1->2->3->4->5->6->7 then
+ * the function should change it to 2->1->4->3->6->5->7, and if the
+ * linked list is 1->2->3->4->5->6 then the function should change it to
+ * 2->1->4->3->6->5 */
+void _pairwaise_swap() {
+    struct node *headp=NULL, *temp=NULL, *pointing_node=NULL;
+
+
+    /** Insert few elements */
+    _insert_last_singly_LL(1, 0);
+    _insert_last_singly_LL(2, 0);
+    _insert_last_singly_LL(3, 0);
+    _insert_last_singly_LL(4, 0);
+    _insert_last_singly_LL(5, 0);
+    _insert_last_singly_LL(6, 0);
+
+    _print_full_LL(head);
+
+    headp = head;
+
+    if(!headp) {
+        printf("_pairwaise_swap: Empty LL\n");
+    }
+
+    while (headp) {
+
+        if (headp && headp->next) {
+            printf("_p_swap: %d, %d\n", headp->x, headp->next->x);
+
+            /** swap the pointers */
+            temp = headp->next;
+            headp->next = headp->next->next;
+            temp->next = headp;
+
+
+            if(pointing_node) {
+                pointing_node->next  = temp;
+            } else {
+                /** First node exchange */
+                head = temp;
+            }
+
+            pointing_node = headp;
+            headp = headp->next;
+            printf("_p_swap: \n");
+            _print_full_LL(head);
+        } 
+    }
+
+    printf("After re-arranging the LL\n");
+
+    _print_full_LL(head);
+
+    _free_singly_LL(head);
+
+}
+
 void main() {
 
     int size=sizeof(struct node), num=5;
@@ -209,6 +340,10 @@ void main() {
 
     **/
 
-    _remove_middle_points();
+   // _remove_middle_points();
+   
+   //_reverse_alt_app_end();
+   //
+   _pairwaise_swap();
 
 }
