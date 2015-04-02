@@ -82,10 +82,12 @@ int _full_btree_recursive(tnode *rootp) {
     return res;
 }
 
-void _print_tree(tnode *rootp) {
+void _print_inorder_tree(tnode *rootp) {
 
-    if (!rootp)  {
-        printf("_print_tr: Empty tree\n");
+    if (rootp)  {
+        _print_inorder_tree(rootp->left);
+        printf("rootp->key: %d, rootp->value: %d\n", rootp->key, rootp->value);
+        _print_inorder_tree(rootp->right);
     }
 
 
@@ -222,6 +224,8 @@ void _remove_half_nodes(){
     _tree_insert_left(root->left->right, 1, 0);
     _tree_insert_right(root->left->right, 11, 0);
 
+    _print_inorder_tree(root);
+
 
     rootp = root;
     /** Call a function to remove the half nodes */
@@ -232,6 +236,8 @@ void _remove_half_nodes(){
     /** recursive function which deletes nodes and update pointers
      * accordingly */
     _rem_half_nodes_recur(root, NULL);
+
+    _print_inorder_tree(root);
 
     /** free nodes it will print the nodes also In free order */
     _free_tnode(root);
