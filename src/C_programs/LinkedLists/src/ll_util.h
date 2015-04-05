@@ -12,4 +12,7 @@ typedef struct dll_node {
     struct dll_node *prev;
 } dll_node_s;
 
+
+#define push_dll(rootp, key, val) _insert_dll_node((rootp), (key), (val));
+
 #endif
