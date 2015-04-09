@@ -75,7 +75,8 @@ void main() {
     _insert_node_bst(root, 2);
 
 
-    _print_bst_range(root, 2, 10);
+    //_print_bst_range(root, 2, 10);
+    _inorder_succ_bst(&root, 4);
     _print_inorder_tree(root);
 
     _free_tnode(root);
