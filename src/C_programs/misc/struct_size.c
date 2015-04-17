@@ -2,11 +2,11 @@
 
 
 struct test {
-    int x;
     char c;
+    int X;
     double d;
     void *p;
-    char k;
+    int a[0];
 };
 
 void main() {
