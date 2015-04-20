@@ -3,9 +3,10 @@
 
 struct test {
     char c;
-    int X;
     double d;
-    void *p;
+    char p;
+    int x;
+    double k;
     int a[0];
 };
 
