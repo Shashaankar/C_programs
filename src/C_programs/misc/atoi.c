@@ -1,9 +1,8 @@
-#include<stdio.h>
-#include <stdlib.h>
+#include <stdio.h>
 
 void main() {
 
-    char *str = "abc";
+    char *str = "123";
 
     printf("\n %d", (int)(str[1]));
 }
