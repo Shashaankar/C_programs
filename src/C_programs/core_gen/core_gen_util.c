@@ -73,7 +73,7 @@ static void dumpstack(void){
     /* This needs to be changed... */
     char dbx[160];
 
-    sprintf(dbx, "echo 'where\ndetach' | gdb -se %d > %s.dump", getpid(), progname);
+    sprintf(dbx, "gcore -o %s_core_dump %d", progname, getpid());
     /* Change the dbx to gdb */
 
     system(dbx);
