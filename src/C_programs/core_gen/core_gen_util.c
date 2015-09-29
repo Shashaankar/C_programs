@@ -3,11 +3,15 @@
 #include <stdlib.h>;
 #include <stdarg.h>;
 
+#include "core_gen_util.h"
+
+/**
 static void signal_handler(int);
 static void dumpstack(void);
 static void cleanup(void);
 void init_signals(void);
 void panic(const char *, ...);
+**/
 
 struct sigaction sigact;
 char *progname;

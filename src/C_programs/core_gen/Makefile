@@ -16,7 +16,7 @@ ODIR=obj
 #LIBS=-lm
 
 ## Specifying dependencies, header files
-_DEPS =
+_DEPS = core_gen_util.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 
