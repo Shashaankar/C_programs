@@ -34,6 +34,7 @@ adl_graph_root* _create_graph_root(int max_ver, int graph_type) {
     if (groot) {
         groot->ghead = _create_graph(max_ver);
         groot->graph_type = graph_type;
+        groot->max_ver = max_ver;
     } else {
         printf("\n create_graph_root failed");
         exit(-1);
@@ -55,23 +56,21 @@ void _print_graph(adl_graph_root *groot, int vertices) {
     }
 
     temp = groot->ghead;
-    for (int i =0; i < vertices; i++) {
+    for (int i =0; i < groot->max_ver; i++) {
 
-        /** goto next vertex in series */
-        temp = (adl_graph_node *)((char *)temp + sizeof(adl_graph_node));
         /** loop through edges of each vertex */
-        if (temp && temp->vertex != -1) {
+        if (temp[i] && temp[i].vertex != -1) {
 
-            printf("\n ######## Vertex: %d", temp->vertex);
-            vertex = temp->vertex;
-            temp = temp->edge;
+            printf("\n ######## Vertex: %d", temp[i].vertex);
+            vertex = temp[i].vertex;
+            temp = temp[i].edge;
 
             /** loop until all the edges from a vertex are done 
              * last node edge will have NULL */
             while (temp) {
 
-                printf("\n Edge from Vertex %d to %d", vertex, temp->vertex);
-                temp = temp->edge;
+                printf("\n Edge from Vertex %d to %d", vertex, temp[i].vertex);
+                temp = temp[i].edge;
             }
         }
     }
