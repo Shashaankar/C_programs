@@ -10,10 +10,12 @@
 void main() {
 
     int max_ver = 10;
-    adl_graph_node *ghead = NULL;
-    ghead = _create_graph(max_ver);
+    adl_graph_root *groot = NULL;
+    groot = _create_graph_root(max_ver, DIRECTED_GRAPH);
+
+    _print_graph(groot, max_ver);
 
 
-    _free_graph(ghead);
+    _free_graph(groot);
 
 } 
