@@ -20,6 +20,7 @@ typedef struct adl_graph_root {
     /** 0 - directed graph 
      *  1 - undirected graph */
     int graph_type;
+    int max_ver;
     struct adl_graph_node  *ghead;
 }adl_graph_root;
 
@@ -43,6 +44,9 @@ void _print_graph(adl_graph_root *groot, int vertices);
 
 /** free memory allocated to adl graph */
 void _free_graph(adl_graph_root *groot);
+
+/** Insert an edge into graph */
+void _insert_graph_node(adl_graph_root *groot, int edge_from, int edge_to);
 
 
 #endif

@@ -4,7 +4,6 @@
 
 
 
-
 /**@brief: Create graph structure and return the head pointer */
 
 adl_graph_node* _create_graph(int max_ver) {
@@ -48,7 +47,7 @@ adl_graph_root* _create_graph_root(int max_ver, int graph_type) {
 
 void _print_graph(adl_graph_root *groot, int vertices) {
 
-    adl_graph_node *temp = NULL;
+    adl_graph_node *temp = NULL, *temp1 = NULL;
     int vertex = 0;
     if (!groot || !groot->ghead) {
         printf("\n graph is NULL ");
@@ -59,18 +58,18 @@ void _print_graph(adl_graph_root *groot, int vertices) {
     for (int i =0; i < groot->max_ver; i++) {
 
         /** loop through edges of each vertex */
-        if (temp[i] && temp[i].vertex != -1) {
+        if (temp[i].vertex != -1) {
 
             printf("\n ######## Vertex: %d", temp[i].vertex);
             vertex = temp[i].vertex;
-            temp = temp[i].edge;
+            temp1 = temp[i].edge;
 
             /** loop until all the edges from a vertex are done 
              * last node edge will have NULL */
-            while (temp) {
+            while (temp1) {
 
                 printf("\n Edge from Vertex %d to %d", vertex, temp[i].vertex);
-                temp = temp[i].edge;
+                temp1 = temp1[i].edge;
             }
         }
     }
@@ -84,7 +83,43 @@ void _print_graph(adl_graph_root *groot, int vertices) {
  * edge_from: starting point of a edge 
  * edge_to: ending point of edge */
 
-void _insert_graph_node(adl_graph_node *ghead, int enge_from, int edge_to) {
+void _insert_graph_node(adl_graph_root *groot, int edge_from, int edge_to) {
+
+    if (!groot || !groot->ghead) {
+        printf("\n graph is NULL");
+        return;
+    }
+
+    if (groot->graph_type == DIRECTED_GRAPH) {
+
+        if(groot->ghead[edge_from].vertex == -1) {
+            groot->ghead[edge_from].vertex = edge_from;
+            groot->ghead[edge_from].edge = _create_graph(1);
+            (groot->ghead[edge_from].edge)->vertex = edge_to;
+            (groot->ghead[edge_from].edge)->edge = NULL;
+            (groot->ghead[edge_from].edge)->weight = 0;
+        } else {
+
+            /** loop until last edge */
+            adl_graph_node *temp = NULL;
+            temp = groot->ghead[edge_from].edge;
+            while(temp->edge) {
+                temp = temp->edge;
+            }
+
+            temp->edge = _create_graph(1);
+            temp->edge->vertex = edge_to;
+            temp->edge->edge = NULL;
+            temp->edge->weight = 0;
+
+        }
+
+    } else if (groot->graph_type == UNDIRECTED_GRAPH) {
+        /** TODO */
+    }
+
+
+
 }
 
 
