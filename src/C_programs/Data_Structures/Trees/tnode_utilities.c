@@ -3,6 +3,8 @@
 #include "tnode.h"
 
 
+#define TNODE_SIZE (sizeof(struct tnode))
+
 void* SRK_ALLOC(int size) {
 
     void *temp=NULL;
@@ -15,10 +17,6 @@ void* SRK_ALLOC(int size) {
 
     return temp;
 }
-
-
-#define TNODE_SIZE (sizeof(struct tnode))
-
 
 
 void _tree_insert_left(tnode *rootp, int key, int value) {
@@ -76,6 +74,9 @@ void _free_tnode(tnode *rootp) {
         _free_tnode(rootp->right);
     }
 
+    printf("_free_tnode: key: %d, value: %d\n", rootp->key, rootp->value);
+    free(rootp);
+#if 0
     /** leaf node */
     if (!rootp->left && !rootp->right) {
         printf("_free_tnode: key: %d, value: %d\n", rootp->key, rootp->value);
@@ -87,6 +88,7 @@ void _free_tnode(tnode *rootp) {
         printf("_free_tnode: key: %d, value: %d\n", rootp->key, rootp->value);
         free(rootp);
     }
+#endif
 
 }
 
@@ -102,42 +104,20 @@ void _print_bst_range(tnode *rootp, int k1, int k2) {
         return;
     }
     if (!rootp) {
-        printf("_bst_range: empty BST \n");
         return;
     }
 
-
     /** BST range logic */
 
-    if (rootp->key >= k1 && rootp->key < k2) {
-        /** k1 - x - k2 */
-        if (rootp->left && (rootp->key != k1)) {
-            _print_bst_range(rootp->left, k1, k2);
-        } 
-        if (rootp->left || rootp->right) {
-            printf("_bst_range: %d\n", rootp->key);
-        }
-        if (rootp->right) {
-            _print_bst_range(rootp->right, k1, k2);
-        }
+    if (rootp->key > k2) {
+        _print_bst_range(rootp->left, k1, k2);
+    } else if (rootp->key < k1) {
+        _print_bst_range(rootp->right, k1, k2);
+    } else {
 
-        if (!rootp->left && !rootp->right) {
-            printf("_bst_range: %d\n", rootp->key);
-        }
-
-    } else if (rootp->key >= k1 && rootp->key >= k2) {
-        /** All key ranges will be in left sub tree */
-        if (rootp->left && (rootp->key != k1)) {
-            _print_bst_range(rootp->left, k1, k2);
-        }
-        if (rootp->key == k1 || rootp->key == k2) {
-            printf("_bst_range: %d\n", rootp->key);
-        }
-    } else if (rootp->key < k1 && rootp->key < k2) {
-        /** All key ranges will be in right sub tree */
-        if (rootp->right) {
-            _print_bst_range(rootp->right, k1, k2);
-        }
+        printf("\n_bst_range: %d", rootp->key);
+        _print_bst_range(rootp->left, k1, k2);
+        _print_bst_range(rootp->right, k1, k2);
     }
 
 }
